@@ -179,6 +179,35 @@ function create_embeddings(api_key::String, input, model_id::String=DEFAULT_EMBE
     return openai_request("embeddings", api_key; method = "POST", model = model_id, input, kwargs...)
 end
 
+
+"""
+List files 
+
+# Arguments: 
+- `api_key::String`: OpenAI API key
+"""
+function list_files(api_key::String, kwargs...)
+    return openai_request("files", api_key; method = "GET", kwargs...)
+end
+
+
+"""
+Upload files 
+
+# Arguments: 
+- `api_key::String`: OpenAI API key
+- `file_path::String`: Path to file
+- `purpose::String`: Purpose of file
+"""
+function upload_file(api_key::String, file_path::String, purpose::String; kwargs...)
+    return openai_request("files", api_key; method = "POST", file = file_path, purpose = purpose, kwargs...)
+end
+
+function upload_file(api_key::String, purpose, file, kwargs...)
+    return OpenAI.openai_request("files", api_key; method = "POST", purpose, file, kwargs...)
+end
+
+
 """
 Create images 
 
